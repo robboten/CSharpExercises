@@ -15,7 +15,12 @@ namespace Ovning1
             set => Id = value;
         } //why go thru all this trouble?
 
-        public string Name;
+        private string Name;
+        public string name
+        {
+            get => Name;
+            set => Name = value;
+        }
         public Employee(string name)
         {
             Guid guid = Guid.NewGuid();
@@ -31,6 +36,12 @@ namespace Ovning1
         public string GetEmployeeByName(string Name)
         {
             return Name;
+        }
+
+        public bool Equals(Employee e)
+        {
+            if (e == null) return false;
+            return (this.Name.Equals(e.Name));
         }
 
     }
