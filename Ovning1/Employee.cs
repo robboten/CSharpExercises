@@ -8,12 +8,30 @@ namespace Ovning1
 {
     internal class Employee
     {
-        public string Id { get; } //are get/set of any use here?
-        public string Name; //are get/set of any use here?
-        public Employee(string name, string id)
+        private string Id;
+        public string id
         {
-            Id = id;
+            get => Id;
+            set => Id = value;
+        } //why go thru all this trouble?
+
+        public string Name;
+        public Employee(string name)
+        {
+            Guid guid = Guid.NewGuid();
+            Id = guid.ToString();
             Name = name;
         }
+
+        public string GetEmployeeById(string Id)
+        {
+            return Id;
+        }
+
+        public string GetEmployeeByName(string Name)
+        {
+            return Name;
+        }
+
     }
 }

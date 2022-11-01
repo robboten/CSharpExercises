@@ -1,7 +1,8 @@
 ﻿//1 -Classes: Employee (Company, Menu)
-//2 - attr: name, salary, (role); methods: SetEmployee, GetEmployee (by name/id), UpdateEmployee, RemoveEmployee, ListEmployees
+//2 - attr: name, salary, id, (role); methods: SetEmployee, GetEmployee (by name/id), UpdateEmployee, RemoveEmployee, ListEmployees
 //3
 using System;
+using System.Runtime.InteropServices;
 
 namespace Ovning1
 {
@@ -9,50 +10,52 @@ namespace Ovning1
     {
         static void Main(string[] args)
         {
+            List<Employee> employees = new List<Employee>();
             //make an array with created employees - append for each?
-            SetEmployee();
+
+            var temp=SetEmployee();
+            if (temp != null)
+            {
+                employees.Add(temp);
+            }
+
+            employees.Add(new Employee("Anna"));
+            employees.Add(new Employee("Ture"));
+            employees.Add(new Employee("Vidar"));
+            employees.Add(new Employee("Bahare"));
 
             //not working atm...
             //GetEmployeeById(Id);
             //GetEmployeeByName(Name);
 
-            //GetEmployees() - loop thru array with employees to get info...
+            ListEmployees(employees); // loop thru array with employees to get info...
         }
 
-        static void SetEmployee()
+        static Employee SetEmployee()
         {
-            //should this return employee?
             Console.WriteLine("Input new employee:");
             Console.Write("Employee name:");
             string iName = Console.ReadLine();
-            Guid guid = Guid.NewGuid();
-            string idStr = guid.ToString();
 
-            if (iName != null)
-            {
-                Employee employee = new Employee(iName, idStr);
-                Console.WriteLine(employee.Name +" created with id: "+ employee.Id);
-            } 
-            else 
-            {
+            while (string.IsNullOrEmpty(iName)) {
                 Console.WriteLine("Not a valid input");
-                //not sure how to deal with a null return value..
+                Console.WriteLine("Input new employee:");
+                iName = Console.ReadLine();
             }
-            
+ 
+            Employee employee = new Employee(iName);
+            Console.WriteLine(employee.Name + " created with id: " + employee.id);
+
+            return employee;
         }
 
-        static string GetEmployeeById(string Id)
+        static void ListEmployees(List<Employee> employees)
         {
-            return Id;
-        }
-
-        static string GetEmployeeByName(string Name)
-        {
-            return Name;
-        }
-
-        static string GetEmployees() {
-            return "list of employees...";
+            Console.WriteLine("Listing current employees:");
+            foreach (Employee employee in employees)
+            {
+                Console.WriteLine("Name: "+employee.Name+" - Id: "+employee.id);
+            }
         }
 
     }
