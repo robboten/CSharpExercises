@@ -29,7 +29,7 @@ namespace Ovning1
             set => salary = value;
         }
         
-        public Employee(string name, int salary)
+        public Employee(string name="None", int salary=0)
         {
             Guid guid = Guid.NewGuid();
             id = guid.ToString();
