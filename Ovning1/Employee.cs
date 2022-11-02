@@ -8,34 +8,33 @@ namespace Ovning1
 {
     internal class Employee
     {
-        private string Id;
-        public string id
+        private string id; //Field
+        public string Id //property
         {
-            get => Id;
-            set => Id = value;
-        } //why go thru all this trouble?
-
-        private string Name;
-        public string name
-        {
-            get => Name;
-            set => Name = value;
+            get => id; //property accessor
+            set => id = value; //value = keyword
         }
-        public Employee(string name)
+
+        private string name;
+        public string Name
+        {
+            get => name;
+            set => name = value;
+        }
+
+        private int salary;
+        public int Salary
+        {
+            get => salary;
+            set => salary = value;
+        }
+        
+        public Employee(string name, int salary)
         {
             Guid guid = Guid.NewGuid();
-            Id = guid.ToString();
-            Name = name;
-        }
-
-        public string GetEmployeeById(string Id)
-        {
-            return Id;
-        }
-
-        public string GetEmployeeByName(string Name)
-        {
-            return Name;
+            id = guid.ToString();
+            this.Name = name;
+            this.Salary = salary;
         }
 
         public bool Equals(Employee e)
