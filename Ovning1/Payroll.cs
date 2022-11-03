@@ -7,13 +7,10 @@ namespace Ovning1
     internal class Payroll 
     {
         private List<Employee> EmployeeList;
-        //private int lastId;
         
         public Payroll() {
             EmployeeList = new List<Employee>();
             EmployeeList = ReadJSON();
-            //lastId= EmployeeList.Last().Id;
-            //Console.WriteLine(lastId);
         }
 
         public void AddEmployee(Employee employee)
@@ -53,7 +50,7 @@ namespace Ovning1
             return EmployeeList;
         }
 
-        private void SaveJSON(List<Employee> employees)
+        private static void SaveJSON(List<Employee> employees)
         {
             string json = JsonSerializer.Serialize(employees);
             File.WriteAllText(@"D:\employees.json", json);

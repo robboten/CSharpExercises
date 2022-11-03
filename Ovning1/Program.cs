@@ -1,6 +1,7 @@
 ﻿//1 -Classes: Employee (Company, Menu)
 //2 - attr: name, salary, id, (role); methods: SetEmployee, GetEmployee (by name/id), UpdateEmployee, RemoveEmployee, ListEmployees
 //3
+using System.Collections;
 using System.Security.Cryptography;
 using static Ovning1.Menu;
 
@@ -9,11 +10,10 @@ namespace Ovning1
 
     internal class Program
     {
-        static Payroll employees = new Payroll();
+        static Payroll employees = new();
         static void Main(string[] args)
         {
             //postgresql.dosql();
-
             while (true)
             {
                 Console.WriteLine("Enter a command:\na to add new \tl to list all \tn to search by name \ti to seach by id \tq to quit");
@@ -33,11 +33,8 @@ namespace Ovning1
         static void AddEmployee()
         {
             Console.WriteLine("\nInput new employee:");
-            Console.Write("Employee name:");
-            string iName = Utils.ValidateString(Console.ReadLine(),"name");
-
-            Console.Write("Employee salary:");
-            int iSalary = Utils.ValidateInt(Console.ReadLine(),"salary");
+            string iName = Utils.ValidateString("name",true);
+            int iSalary = Utils.ValidateInt("salary",true);
 
             Employee employee = new Employee(iName, iSalary);
             employees.AddEmployee(employee);
@@ -47,9 +44,7 @@ namespace Ovning1
         static void GetEmployeeById()
         {
             Console.WriteLine("\nSearch employee by id:");
-            Console.Write("Employee id:");
-
-            int iId = Utils.ValidateInt(Console.ReadLine(), "id");
+            int iId = Utils.ValidateInt("id", false);
 
             var employeeList = employees.GetEmployees();
             var employee = employeeList.Find(Employee => Employee.Id == iId);
@@ -69,10 +64,9 @@ namespace Ovning1
         static void GetEmployeeByName()
         {
             Console.WriteLine("\nSearch employee by name:");
-            Console.Write("Employee name:");
-            string iName = Utils.ValidateString(Console.ReadLine(),"name");
+            string iName = Utils.ValidateString("name", false);
 
-            var employee = employees.GetEmployees().Find(Employee => Employee.Name == iName);
+            var employee = employees.GetEmployees().Find(Employee => Employee.Name.ToLower() == iName.ToLower());
 
             if (employee != null)
             {

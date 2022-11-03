@@ -8,8 +8,15 @@ namespace Ovning1
 {
     internal class Utils
     {
-        public static int ValidateInt(string val, string str)
+        public static int ValidateInt(string str, bool o)
         {
+
+            if (o)
+            {
+                Console.Write($"Employee {str}:");
+            }
+            string val = Console.ReadLine()!;
+
             while (true)
             {
                 if (!string.IsNullOrEmpty(val) && int.TryParse(val, out int i))
@@ -25,8 +32,14 @@ namespace Ovning1
             }
         }
 
-        public static string ValidateString(string val, string str)
+        public static string ValidateString(string str, bool o)
         {
+            if (o)
+            {
+                Console.Write($"Employee {str}:");
+            }
+            string val = Console.ReadLine()!;
+
             while (true)
             {
                 if (string.IsNullOrEmpty(val) || int.TryParse(val, out int i))
@@ -41,5 +54,6 @@ namespace Ovning1
                 }
             }
         }
+
     }
 }
