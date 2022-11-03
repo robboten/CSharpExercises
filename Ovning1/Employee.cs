@@ -1,40 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Ovning1
 {
     internal class Employee
     {
-        private string id; //Field
-        public string Id //property
-        {
-            get => id; //property accessor
-            set => id = value; //value = keyword
-        }
+        static private int c = 0;
 
-        private string name;
-        public string Name
-        {
-            get => name;
-            set => name = value;
-        }
+        public int Id { get; set; }
 
-        private int salary;
-        public int Salary
+        //private string guid; //Field
+        //public string Id2 //property
+        //{
+        //    get => guid; //property accessor
+        //    set => guid = value; //value = keyword
+        //}
+
+        public string Name { get; set; }
+        public int Salary { get; set; }
+
+        public Employee(string name, int salary)
         {
-            get => salary;
-            set => salary = value;
+            c++;
+            //Guid guid = Guid.NewGuid();
+            //this.guid = guid.ToString();
+            Id = c;
+            Name = name;
+            Salary = salary;
+            //Console.WriteLine(name + " is constructed with " + id);
         }
-        
-        public Employee(string name="None", int salary=0)
+        [JsonConstructor]
+        public Employee(string name, int salary, int id)
         {
-            Guid guid = Guid.NewGuid();
-            id = guid.ToString();
-            this.Name = name;
-            this.Salary = salary;
+            c++;
+            Id = id;
+            Name = name;
+            Salary = salary;
+            //Console.WriteLine(name + " is constructed with " + id);
+            //Console.WriteLine("c=" + c);
         }
 
         public bool Equals(Employee e)
