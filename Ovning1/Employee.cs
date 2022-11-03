@@ -11,7 +11,6 @@ namespace Ovning1
     internal class Employee
     {
         static private int c = 0;
-
         public int Id { get; set; }
 
         //private string guid; //Field
@@ -32,7 +31,6 @@ namespace Ovning1
             Id = c;
             Name = name;
             Salary = salary;
-            //Console.WriteLine(name + " is constructed with " + id);
         }
         [JsonConstructor]
         public Employee(string name, int salary, int id)
@@ -41,10 +39,7 @@ namespace Ovning1
             Id = id;
             Name = name;
             Salary = salary;
-            //Console.WriteLine(name + " is constructed with " + id);
-            //Console.WriteLine("c=" + c);
         }
-
         public bool Equals(Employee e)
         {
             if (e == null) return false;
