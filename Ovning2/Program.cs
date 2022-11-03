@@ -10,8 +10,6 @@ namespace Ovning2
 {
     internal class Program
     {
-
-
         //För att skapa programmets huvudmeny ska ni göra följande:
         //1. Berätta för användaren att de har kommit till huvudmenyn och de kommer navigera
         //genom att skriva in siffror för att testa olika funktioner.
@@ -20,6 +18,8 @@ namespace Ovning2
         //3. Skapa en oändlig iteration, alltså något som inte tar slut innan vi säger till att den
         //ska ta slut.Detta löser ni med att skapa en egen bool med tillhörande while-loop.
         //4. Bygg ut menyn med val att exekvera de övriga övningarna.
+
+
 
         static class MenuItem
         {
@@ -52,7 +52,7 @@ namespace Ovning2
                 char command = Console.ReadKey(true).KeyChar;
                 switch (command)
                 {
-                    case MenuItem.First: Console.Clear(); CheckAge(); break;
+                    case MenuItem.First: Console.Clear(); CheckAgeAlt(); break;
                     case MenuItem.Second: Console.Clear(); CalcPrice(); break;
                     case MenuItem.Third: Console.Clear(); Parrot(); break;
                     case MenuItem.Fourth: Console.Clear(); ThirdWord(); break;
@@ -63,8 +63,66 @@ namespace Ovning2
             }
         }
 
+        //alternative with ternary operator returning tuple with int and string only. Good - clean. Bad - ?
+        static int CheckAgeAlt()
+        {
+            (int,string) GetPrice2(uint value)
+            {
+                return
+                    (value > 100) ? (0, "Gratis") :
+                    (value > 64) ? (90, "Pensionärspris") :
+                    (value > 20) ? (120, "Standardpris") :
+                    (value > 5) ? (80, "Ungdomspris") :
+                    (value > 0) ? (0, "Gratis") :
+                    (120,"Standardpris");
+            }
+            while (true)
+            {
+                Console.Write("Skriv en ålder: ");
+                if (uint.TryParse(Console.ReadLine(), out uint age))
+                {
+                    int price = GetPrice2(age).Item1;
+                    Console.WriteLine($"Priset för {age} år är {price} kr ({GetPrice2(age).Item2})");
+                    Console.WriteLine("Tryck valfri tangent för att fortsätta ...");
+                    Console.ReadKey();
+                    return price;
+                }
+                else
+                {
+                    Console.WriteLine("Skriv åldern i siffror");
+                }
+            }
 
+            //alternative with ternary operator returning ints only. Good - clean. Bad - no nice string if keeping the prices as ints
+            //int GetPrice(uint value)
+            //{
+            //    return
+            //        (value > 100) ? 0 :
+            //        (value > 64) ? 90 :
+            //        (value > 20) ? 120 :
+            //        (value > 5) ? 80 :
+            //        (value > 0) ? 0 :
+            //        120;
+            //}
+            //while (true)
+            //{
+            //    Console.Write("Skriv en ålder: ");
+            //    if (uint.TryParse(Console.ReadLine(), out uint age))
+            //    {
+            //        int price = GetPrice(age);
+            //        Console.WriteLine($"Priset för {age} år är {price} kr");
+            //        Console.WriteLine("Tryck valfri tangent för att fortsätta ...");
+            //        Console.ReadKey();
+            //        return price;
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Skriv åldern i siffror");
+            //    }
+            //}
+        }
 
+        //alt with old ifs, could be case too maybe? Good - easy to read, more output. Bad - long and unflexible
         static int CheckAge() //1
         {
             // Användaren anger en ålder i siffror
@@ -85,6 +143,11 @@ namespace Ovning2
                     {
                         price = 80;
                         Console.WriteLine($"Ungdomspris: {price}kr");
+                    }
+                    else if (age>122)
+                    {
+                        price = 0;
+                        Console.WriteLine("Wow! Du är nu äldst i världen och får gå gratis!");
                     }
                     else if(age > 64)
                     {
@@ -175,15 +238,16 @@ namespace Ovning2
 
             while (true)
             {
+                int nr = 3;
                 Console.Clear();
-                Console.Write("Skriv in minst 3 ord: ");
+                Console.Write($"Skriv in minst {nr} ord: ");
                 string str = Console.ReadLine();
                 if (str != "")
                 {
                     var lst = str.Split(null);
-                    if (lst.Length > 2)
+                    if (lst.Length > nr-1)
                     {
-                        Console.WriteLine($"Tredje ordet är: {lst[2]}");
+                        Console.WriteLine($"Ord nr {nr} är: {lst[nr-1]}");
                         Console.WriteLine("\nTryck valfri tangent för att fortsätta ...");
                         Console.ReadKey();
                         return;
@@ -200,10 +264,5 @@ namespace Ovning2
         //2. Barn under fem och pensionärer över 100 går gratis.
         //3. Hantera flera mellanslag i rad i del 3.
         //4. Vad du tycker verkar vara intressant att få med eller vill träna på!
-
-        static bool AskInt()
-        {
-            return false;
-        }
     }
 }
