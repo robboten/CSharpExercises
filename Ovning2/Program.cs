@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.Net.NetworkInformation;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.ExceptionServices;
 using System.Security.Cryptography;
@@ -218,8 +220,25 @@ namespace Ovning2
 
             //alt 1 - no number prefix but simple code and no ugly , at the end
             Console.WriteLine($"Output alt 1: {string.Join(", ",lst)}\n");
-            //alt 2 - ugly comma at end and long code
-            Console.WriteLine("Output alt 2:");
+            Console.WriteLine();
+
+            //alt 2 - no number prefix but simple code and no ugly , at the end
+            string Prefix = ".";
+            string strOutput = string.Join(", ", lst.Select((x,index) => index+1 + Prefix + x));
+            Console.WriteLine($"Output alt 2:{strOutput}");
+
+            Console.WriteLine("Output alt 3");
+            var query =lst.Select((lst, index) => new { index, word = lst.Substring(0, index) });
+            Console.WriteLine();
+
+            foreach (var obj in query)
+            {
+                Console.Write(obj.index+"."+obj.word);
+            }
+
+            lst = str.Split(" ", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+            //alt 3 - ugly comma at end and long code
+            Console.WriteLine("Output alt 4:");
             for (int i = 0; i < (lst.Length); i++)
             {
                 Console.Write($"{i+1}.{ lst[i]}, ");
