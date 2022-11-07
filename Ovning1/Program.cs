@@ -53,7 +53,7 @@ namespace Ovning1
             if (employee != null)
             {
                 Console.WriteLine("\nRequested employee:");
-                PrintEmployee(employee);
+                employee.Print();
             }
             else
             {
@@ -71,23 +71,20 @@ namespace Ovning1
             if (employee != null)
             {
                 Console.WriteLine("\nRequested employee:");
-                PrintEmployee(employee);
+                employee.Print();
             }
             else
             {
                 Console.WriteLine("Employee " + iName + " does not exist");
             }
         }
-        static void PrintEmployee(Employee emp)
-        {
-            Console.WriteLine("Id:" + emp.Id + " Name: " + emp.Name + " - Salary: " + emp.Salary);
-        }
+
         static void ListEmployees()
         {
             Console.WriteLine("Listing current employees:");
             foreach (var employee in employees.GetEmployees())
             {
-                PrintEmployee(employee);
+                employee.Print();
             }
 
         }

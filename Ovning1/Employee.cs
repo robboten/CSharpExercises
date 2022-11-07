@@ -45,6 +45,9 @@ namespace Ovning1
             if (e == null) return false;
             return (this.Name.Equals(e.Name));
         }
-
+        public void Print()
+        {
+            Console.WriteLine("Id:" + Id + " Name: " + Name + " - Salary: " + Salary);
+        }
     }
 }

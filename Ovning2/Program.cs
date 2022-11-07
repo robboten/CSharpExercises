@@ -21,7 +21,6 @@ namespace Ovning2
         //ska ta slut.Detta löser ni med att skapa en egen bool med tillhörande while-loop.
         //4. Bygg ut menyn med val att exekvera de övriga övningarna.
 
-
         static class MenuItem
         {
             public const char First = '1';
