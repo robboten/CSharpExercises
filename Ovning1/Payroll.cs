@@ -1,59 +1,83 @@
 ﻿
+using Ovning1.IO;
 using System.ComponentModel;
+using System.Security.Cryptography;
 using System.Text.Json;
 
 namespace Ovning1
 {
     internal class Payroll 
     {
-        private List<Employee> EmployeeList;
-        
-        public Payroll() {
-            EmployeeList = new List<Employee>();
-            EmployeeList = ReadJSON();
+        private readonly ISerialize employeeIn;
+        private readonly List<Employee> EmployeeList;
+        public Payroll(ISerialize deserialized) {
+            employeeIn = deserialized;
+            EmployeeList = employeeIn.DeserializeEmployees();
         }
 
-        public void AddEmployee(Employee employee)
+        public void test()
         {
-            ReadJSON();
+            Console.WriteLine(EmployeeList[0].Name);
+        }
+        public void AddItem()
+        {
+            Console.WriteLine("\nInput new employee:");
+            string iName = Utils.ValidateString("name", true);
+            int iSalary = Utils.ValidateInt("salary", true);
+
+            Employee employee = new(iName, iSalary);
             EmployeeList.Add(employee);
-            SaveJSON(EmployeeList);
+            Console.WriteLine(employee.Name + " created with id: " + employee.Id);
+            // SaveJSON(EmployeeList);
         }
 
+        public void ListEmployees()
+        {
+            Console.WriteLine("Listing current employees:");
+            foreach (var employee in EmployeeList)
+            {
+                employee.Print();
+            }
+
+        }
         public List<Employee> GetEmployees()
         {
             return EmployeeList.ToList();
         }
 
-        private List<Employee> ReadJSON()
+        public void SearchEmployee()
         {
-            string path = @"D:\employees.json";
-            string json;
-            if (File.Exists(path))
+            Console.WriteLine($"\nSearch for employee (name or id):");
+            string sStr = Utils.ValidateInput();
+            FindIt(sStr);
+        }
+
+        private void FindIt(string searchStr)
+        {
+            Employee? employee;
+            if (int.TryParse(searchStr, out int id))
             {
-                json = File.ReadAllText(@"D:\employees.json");
+                employee = EmployeeList.Find(Employee => Employee.Id == id);
             }
             else
             {
-                //make a dummy json for now if file doesn't load...
-                json = "[{\"Id\":1,\"Name\":\"Robert\",\"Salary\":10}]";
+                employee = EmployeeList.Find(Employee => Employee.Name.ToLower() == searchStr.ToLower());
             }
-            //how to safeguard this return if the file is empty/doesn't exist/bugs out in reading?
-            //Console.WriteLine(json);
-            var EmployeeList = JsonSerializer.Deserialize<List<Employee>>(json);
-
-            //var emp = new Employee("hej", 99,9);
-            //EmployeeList.Add(emp);
-            //emp = new Employee("ap", 99,6);
-            //EmployeeList.Add(emp);
-
-            return EmployeeList;
+            
+            if (employee != null)
+            {
+                Console.WriteLine("\nRequested employee:");
+                employee.Print();
+            }
+            else
+            {
+                Console.WriteLine("Employee " + searchStr + " does not exist");
+            }
         }
 
-        private static void SaveJSON(List<Employee> employees)
-        {
-            string json = JsonSerializer.Serialize(employees);
-            File.WriteAllText(@"D:\employees.json", json);
-        }
+        private void ClearPayroll() { EmployeeList.Clear(); }
+        private void UpdatePayroll() { }
+
+
     }
 }

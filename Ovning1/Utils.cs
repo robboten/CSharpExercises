@@ -54,6 +54,23 @@ namespace Ovning1
                 }
             }
         }
+        public static string ValidateInput()
+        {
+            string val = Console.ReadLine()!;
+
+            while (true)
+            {
+                if (string.IsNullOrEmpty(val))
+                {
+                    Console.WriteLine("Not a valid input, Try again");
+                    val = Console.ReadLine()!;
+                }
+                else
+                {
+                    return val;
+                }
+            }
+        }
 
     }
 }

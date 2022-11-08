@@ -1,92 +1,41 @@
 ﻿//1 -Classes: Employee (Company, Menu)
 //2 - attr: name, salary, id, (role); methods: SetEmployee, GetEmployee (by name/id), UpdateEmployee, RemoveEmployee, ListEmployees
 //3
-using System.Collections;
-using System.Security.Cryptography;
+using Ovning1;
+using Ovning1.IO;
+using Ovning1.UI;
+using System.Windows.Forms;
 using static Ovning1.Menu;
 
-namespace Ovning1
+
+internal class Program
 {
-
-    internal class Program
+    [STAThread]
+    private static void Main(string[] args)
     {
-        static Payroll employees = new();
-        static void Main(string[] args)
-        {
-            //postgresql.dosql();
-            while (true)
-            {
-                Console.WriteLine("Enter a command:\na to add new \tl to list all \tn to search by name \ti to seach by id \tq to quit");
-                char command = Console.ReadKey().KeyChar;
-                switch (command)
-                {
-                    case MenuHelpers.Quit: Console.WriteLine("\nquitting..."); return;
-                    case MenuHelpers.Add: AddEmployee(); break;
-                    case MenuHelpers.List: ListEmployees(); break;
-                    case MenuHelpers.SearchName: GetEmployeeByName(); break;
-                    case MenuHelpers.SearchId: GetEmployeeById(); break;
-                    default: Console.WriteLine("\nEnter a valid command"); break;
-                }
-            }
-        }
+        Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+        
+        ISerialize serializable = new EmployeesSerialize();
+        Payroll employees = new(serializable);
 
-        static void AddEmployee()
-        {
-            Console.WriteLine("\nInput new employee:");
-            string iName = Utils.ValidateString("name",true);
-            int iSalary = Utils.ValidateInt("salary",true);
+        ////postgresql.dosql();
+        //   while (true)
+        /// {
+        //Console.WriteLine($"Enter a command:\n{MenuHelpers.Add} to add new \t{MenuHelpers.List} to list all \t{MenuHelpers.Search} to search for employee \t{MenuHelpers.Quit} to quit");
+        //char command = Console.ReadKey().KeyChar;
+        //switch (command)
+        //{
+        //    case MenuHelpers.Quit: Console.WriteLine("\nquitting..."); return;
+        //    case MenuHelpers.Add: employees.AddItem(); break;
+        //    case MenuHelpers.List: employees.ListEmployees(); break;
+        //    case MenuHelpers.Search: employees.SearchEmployee(); break;
+        //    default: Console.WriteLine("\nEnter a valid command"); break;
+        //}
+        // }
 
-            Employee employee = new Employee(iName, iSalary);
-            employees.AddEmployee(employee);
-            Console.WriteLine(employee.Name + " created with id: " + employee.Id);
-        }
+        IUI ui = new FormsUi(employees);
 
-        static void GetEmployeeById()
-        {
-            Console.WriteLine("\nSearch employee by id:");
-            int iId = Utils.ValidateInt("id", false);
 
-            var employeeList = employees.GetEmployees();
-            var employee = employeeList.Find(Employee => Employee.Id == iId);
-
-            
-            if (employee != null)
-            {
-                Console.WriteLine("\nRequested employee:");
-                employee.Print();
-            }
-            else
-            {
-                Console.WriteLine("Employee (by id " + iId + ") does not exist");
-            }
-        }
-
-        static void GetEmployeeByName()
-        {
-            Console.WriteLine("\nSearch employee by name:");
-            string iName = Utils.ValidateString("name", false);
-
-            var employee = employees.GetEmployees().Find(Employee => Employee.Name.ToLower() == iName.ToLower());
-
-            if (employee != null)
-            {
-                Console.WriteLine("\nRequested employee:");
-                employee.Print();
-            }
-            else
-            {
-                Console.WriteLine("Employee " + iName + " does not exist");
-            }
-        }
-
-        static void ListEmployees()
-        {
-            Console.WriteLine("Listing current employees:");
-            foreach (var employee in employees.GetEmployees())
-            {
-                employee.Print();
-            }
-
-        }
     }
 }

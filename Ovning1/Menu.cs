@@ -13,8 +13,7 @@ namespace Ovning1
             public const char Quit = 'q';
             public const char List = 'l';
             public const char Add = 'a';
-            public const char SearchName = 'n';
-            public const char SearchId = 'i';
+            public const char Search = 's';
             public const char Remove = 'r';
             public const char Update = 'u';
         }

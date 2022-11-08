@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ovning1", "Ovning1\Ovning1.csproj", "{4226B429-A275-46CA-9938-B56D01213479}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ovning2", "Ovning2\Ovning2.csproj", "{7FE27DBD-3F2D-461B-8604-6279E44CF78C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ovning2", "Ovning2\Ovning2.csproj", "{7FE27DBD-3F2D-461B-8604-6279E44CF78C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
