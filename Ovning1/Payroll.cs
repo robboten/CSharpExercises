@@ -9,15 +9,15 @@ namespace Ovning1
     internal class Payroll 
     {
         private readonly ISerialize employeeIn;
-        private readonly List<Employee> EmployeeList;
+        private readonly List<Employee> employeeList;
         public Payroll(ISerialize deserialized) {
             employeeIn = deserialized;
-            EmployeeList = employeeIn.DeserializeEmployees();
+            employeeList = employeeIn.DeserializeEmployees()!;
         }
 
         public void test()
         {
-            Console.WriteLine(EmployeeList[0].Name);
+            Console.WriteLine(employeeList[0].Name);
         }
         public void AddItem()
         {
@@ -26,15 +26,15 @@ namespace Ovning1
             int iSalary = Utils.ValidateInt("salary", true);
 
             Employee employee = new(iName, iSalary);
-            EmployeeList.Add(employee);
+            employeeList.Add(employee);
+            employeeIn.SerializeEmployees(employeeList);
             Console.WriteLine(employee.Name + " created with id: " + employee.Id);
-            // SaveJSON(EmployeeList);
         }
 
         public void ListEmployees()
         {
             Console.WriteLine("Listing current employees:");
-            foreach (var employee in EmployeeList)
+            foreach (var employee in employeeList)
             {
                 employee.Print();
             }
@@ -42,7 +42,7 @@ namespace Ovning1
         }
         public List<Employee> GetEmployees()
         {
-            return EmployeeList.ToList();
+            return employeeList.ToList();
         }
 
         public void SearchEmployee()
@@ -57,11 +57,11 @@ namespace Ovning1
             Employee? employee;
             if (int.TryParse(searchStr, out int id))
             {
-                employee = EmployeeList.Find(Employee => Employee.Id == id);
+                employee = employeeList.Find(Employee => Employee.Id == id);
             }
             else
             {
-                employee = EmployeeList.Find(Employee => Employee.Name.ToLower() == searchStr.ToLower());
+                employee = employeeList.Find(Employee => Employee.Name.ToLower() == searchStr.ToLower());
             }
             
             if (employee != null)
@@ -75,7 +75,7 @@ namespace Ovning1
             }
         }
 
-        private void ClearPayroll() { EmployeeList.Clear(); }
+        private void ClearPayroll() { employeeList.Clear(); }
         private void UpdatePayroll() { }
 
 

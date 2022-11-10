@@ -18,11 +18,11 @@ namespace Ovning1.UI
             Console.WriteLine(msg);
         }
     }
-    internal class FormsUi : IUI
+    internal class WinFormsUi : IUI
     {
-        public FormsUi(Payroll employees)
+        public WinFormsUi(Payroll employees)
         {
-            Form1 Formen = new Form1(employees);
+            Form1 Formen = new(employees);
             var l = employees.GetEmployees().ToArray();
 
             Formen.AddStuff(l);

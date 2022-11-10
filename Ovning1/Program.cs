@@ -13,29 +13,27 @@ internal class Program
     [STAThread]
     private static void Main(string[] args)
     {
-        Application.EnableVisualStyles();
-        Application.SetCompatibleTextRenderingDefault(false);
-        
         ISerialize serializable = new EmployeesSerialize();
+        ConsoleUi ui = new();
         Payroll employees = new(serializable);
 
-        ////postgresql.dosql();
-        //   while (true)
-        /// {
-        //Console.WriteLine($"Enter a command:\n{MenuHelpers.Add} to add new \t{MenuHelpers.List} to list all \t{MenuHelpers.Search} to search for employee \t{MenuHelpers.Quit} to quit");
-        //char command = Console.ReadKey().KeyChar;
-        //switch (command)
-        //{
-        //    case MenuHelpers.Quit: Console.WriteLine("\nquitting..."); return;
-        //    case MenuHelpers.Add: employees.AddItem(); break;
-        //    case MenuHelpers.List: employees.ListEmployees(); break;
-        //    case MenuHelpers.Search: employees.SearchEmployee(); break;
-        //    default: Console.WriteLine("\nEnter a valid command"); break;
-        //}
-        // }
+        //postgresql.dosql();
+        while (true)
+         {
+            ui.Print($"Enter a command:\n{MenuHelpers.Add} to add new \t{MenuHelpers.List} to list all \t{MenuHelpers.Search} to search for employee \t{MenuHelpers.Quit} to quit");
+            char command = Console.ReadKey().KeyChar;
+            switch (command)
+            {
+                case MenuHelpers.Quit: ui.Print("\nquitting..."); return;
+                case MenuHelpers.Add: employees.AddItem(); break;
+                case MenuHelpers.List: employees.ListEmployees(); break;
+                case MenuHelpers.Search: employees.SearchEmployee(); break;
+                default: ui.Print("\nEnter a valid command"); break;
+            }
+        }
 
-        IUI ui = new FormsUi(employees);
-
-
+        //Application.EnableVisualStyles();
+        //Application.SetCompatibleTextRenderingDefault(false);
+        //IUI ui = new WinFormsUi(employees);
     }
 }
