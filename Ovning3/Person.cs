@@ -22,8 +22,8 @@ namespace Ovning3
         //all of these are quite weird when they are accessible right of from main, but how else to reach them from PersonHandler?
         public Person(string fName, string lName, int age, double height, double weight)
         {
-            this.lName = lName;
-            this.fName = fName;
+            Fname = fName;
+            Lname = lName;
             Age = age;
             Height = height;
             Weight = weight;
